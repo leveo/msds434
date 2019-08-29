@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <h1>{{ title }}</h1>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+  <script language="JavaScript"><!--
+  function displayLineChart() {
+    var data = {
+        labels: [
+          {% for item in labels %}
+            "{{ item }}",
+          {% endfor %}
+        ],
+        datasets: [
+            {
+                label: "Predicted Value",
+                fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "rgba(220,220,220,1)",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data : [
+                   {% for item in value2 %}
+                    {{ item }},
+                    {% endfor %}]
+            },
+            {
+                label: "Actual Value",
+                fillColor: "rgba(151,187,205,0.2)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(151,187,205,1)",
+
+                data : [
+                   {% for item in value1 %}
+                    {{ item }},
+                    {% endfor %}]
+            }
+        ]
+    };
+    var ctx = document.getElementById("lineChart").getContext("2d");
+    var options = {
+      scaleOverride : true,
+      scaleSteps : 10,
+      scaleStepWidth : 500,
+      scaleStartValue : 0,
+        legend:{
+          display:true,
+          labels: {
+                        fontColor: 'rgb(255, 99, 132)'
+                    }
+                  }
+    };
+    var lineChart = new Chart(ctx).Line(data, options);
+    document.getElementById("legendDiv").innerHTML = lineChart.generateLegend();
+    }
+  --></script>
+</head>
+<body onload="displayLineChart();">
+  <div class="box">
+    <canvas id="lineChart" height="450" width="800"></canvas>
+    <div id="legendDiv"></div>
+  </div>
+</body>
+</html>
